@@ -14,7 +14,6 @@
             --neon-green: #39ff14;
             --neon-purple: #b026ff;
             --neon-amber: #ffaa00;
-            --neon-pink: #ff007f;
         }
 
         * {
@@ -47,7 +46,7 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             text-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
-            background: linear-gradient(45deg, var(--neon-cyan), var(--neon-purple), var(--neon-pink));
+            background: linear-gradient(45deg, var(--neon-cyan), var(--neon-purple), var(--neon-amber));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 0.5rem;
@@ -74,12 +73,10 @@
             letter-spacing: 0.5px;
         }
 
-        /* Distinct glow identities for sections */
         .sec-coding .category-title { color: var(--neon-cyan); text-shadow: 0 0 10px rgba(0,240,255,0.3); }
         .sec-hardware .category-title { color: var(--neon-green); text-shadow: 0 0 10px rgba(57,255,20,0.3); }
         .sec-ai .category-title { color: var(--neon-purple); text-shadow: 0 0 10px rgba(176,38,255,0.3); }
         .sec-cyber .category-title { color: var(--neon-amber); text-shadow: 0 0 10px rgba(255,170,0,0.3); }
-        .sec-creative .category-title { color: var(--neon-pink); text-shadow: 0 0 10px rgba(255,0,127,0.3); }
 
         .grid {
             display: grid;
@@ -102,14 +99,11 @@
             box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
         }
 
-        /* Neon borders on hover per section */
         .sec-coding .card:hover { border-color: var(--neon-cyan); }
         .sec-hardware .card:hover { border-color: var(--neon-green); }
         .sec-ai .card:hover { border-color: var(--neon-purple); }
         .sec-cyber .card:hover { border-color: var(--neon-amber); }
-        .sec-creative .card:hover { border-color: var(--neon-pink); }
 
-        /* Themed Graphic Cover Banners instead of screenshots */
         .card-banner {
             height: 110px;
             width: 100%;
@@ -127,7 +121,6 @@
         .banner-hardware { background: linear-gradient(135deg, #132a13, #3f5e5a); }
         .banner-ai { background: linear-gradient(135deg, #3c096c, #5a189a); }
         .banner-cyber { background: linear-gradient(135deg, #9a031e, #e36414); }
-        .banner-creative { background: linear-gradient(135deg, #7209b7, #f72585); }
 
         .card-body {
             padding: 1.5rem;
@@ -180,12 +173,10 @@
             border: none;
         }
 
-        /* Specific high-contrast button flashes on hover */
         .sec-coding .card:hover .go-btn { background-color: var(--neon-cyan); color: #0b0f19; box-shadow: 0 0 15px rgba(0,240,255,0.4); }
         .sec-hardware .card:hover .go-btn { background-color: var(--neon-green); color: #0b0f19; box-shadow: 0 0 15px rgba(57,255,20,0.4); }
         .sec-ai .card:hover .go-btn { background-color: var(--neon-purple); color: #ffffff; box-shadow: 0 0 15px rgba(176,38,255,0.4); }
         .sec-cyber .card:hover .go-btn { background-color: var(--neon-amber); color: #0b0f19; box-shadow: 0 0 15px rgba(255,170,0,0.4); }
-        .sec-creative .card:hover .go-btn { background-color: var(--neon-pink); color: #ffffff; box-shadow: 0 0 15px rgba(255,0,127,0.4); }
 
         footer {
             text-align: center;
@@ -205,6 +196,7 @@
             <p>Pick a zone, choose an adventure, and start breaking code!</p>
         </header>
 
+        <!-- ZONE 1: CODING -->
         <div class="category-section sec-coding">
             <h2 class="category-title">👾 The Code Arena</h2>
             <div class="grid">
@@ -221,116 +213,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="card">
-                    <div class="card-banner banner-coding">↕</div>
-                    <div class="card-body">
-                        <div>
-                            <div class="card-title">Elevator Saga</div>
-                            <p class="card-desc">Write Javascript rules to control a massive skyscraper's elevator system. Can you stop the people from waiting too long?</p>
-                        </div>
-                        <div class="card-meta">
-                            <span class="url-text">play.elevatorsaga.com</span>
-                            <a href="http://play.elevatorsaga.com/" target="_blank" class="go-btn">GO!</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-banner banner-coding">🗺️</div>
-                    <div class="card-body">
-                        <div>
-                            <div class="card-title">Twilio Quest</div>
-                            <p class="card-desc">Explore a retro 16-bit gaming world while learning real programmatic commands to save the Cloud!</p>
-                        </div>
-                        <div class="card-meta">
-                            <span class="url-text">twilio.com/quest</span>
-                            <a href="https://www.twilio.com/quest" target="_blank" class="go-btn">GO!</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-banner banner-coding">🧪</div>
-                    <div class="card-body">
-                        <div>
-                            <div class="card-title">App / Game / Web Lab</div>
-                            <p class="card-desc">The ultimate creative sandboxes. Build your own mobile app layouts, code arcade games, or design complete websites from scratch.</p>
-                        </div>
-                        <div class="card-meta">
-                            <span class="url-text">code.org/labs</span>
-                            <a href="https://code.org/" target="_blank" class="go-btn">GO!</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-banner banner-coding">🏎️</div>
-                    <div class="card-body">
-                        <div>
-                            <div class="card-title">Cruisin' with CPU</div>
-                            <p class="card-desc">Drive a racing car through tricky tracks by typing out direct Assembly language microchip instructions.</p>
-                        </div>
-                        <div class="card-meta">
-                            <span class="url-text">code.org</span>
-                            <a href="https://code.org/" target="_blank" class="go-btn">GO!</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-banner banner-coding">🧩</div>
-                    <div class="card-body">
-                        <div>
-                            <div class="card-title">Regex Crossword</div>
-                            <p class="card-desc">Love logic puzzles? Crack these tricky crossword grids using the smart pattern-matching rules professional coders use.</p>
-                        </div>
-                        <div class="card-meta">
-                            <span class="url-text">regexcrossword.com</span>
-                            <a href="https://regexcrossword.com/" target="_blank" class="go-btn">GO!</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-banner banner-coding">🔓</div>
-                    <div class="card-body">
-                        <div>
-                            <div class="card-title">Untrusted</div>
-                            <p class="card-desc">A puzzle game where the environment is locked down. The only way out? Hack, rewrite, and break the level's JavaScript source code!</p>
-                        </div>
-                        <div class="card-meta">
-                            <span class="url-text">alexnisnevich.github.io/untrusted</span>
-                            <a href="https://alexnisnevich.github.io/untrusted/" target="_blank" class="go-btn">GO!</a>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
 
+        <!-- ZONE 2: HARDWARE -->
         <div class="category-section sec-hardware">
             <h2 class="category-title">🔌 Hardware & Architecture Core</h2>
             <div class="grid">
-                <div class="card">
-                    <div class="card-banner banner-hardware">⚡</div>
-                    <div class="card-body">
-                        <div>
-                            <div class="card-title">The Nand Game</div>
-                            <p class="card-desc">Start at the atomic level with raw electrical switches and wire them together to build a functioning computer processor.</p>
-                        </div>
-                        <div class="card-meta">
-                            <span class="url-text">nandgame.com</span>
-                            <a href="https://nandgame.com/" target="_blank" class="go-btn">GO!</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-banner banner-hardware">⚙️</div>
-                    <div class="card-body">
-                        <div>
-                            <div class="card-title">The CPU Simulator</div>
-                            <p class="card-desc">Become the computer's brain. Manually guide data around registers to beat the Fetch-Decode-Execute cycle speed run challenge.</p>
-                        </div>
-                        <div class="card-meta">
-                            <span class="url-text">goldsmiths.ac.uk</span>
-                            <a href="https://www.gold.ac.uk/" target="_blank" class="go-btn">GO!</a>
-                        </div>
-                    </div>
-                </div>
                 <div class="card">
                     <div class="card-banner banner-hardware">🏝️</div>
                     <div class="card-body">
@@ -370,35 +259,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="card">
-                    <div class="card-banner banner-hardware">🔴</div>
-                    <div class="card-body">
-                        <div>
-                            <div class="card-title">CircuitVerse / Logicly</div>
-                            <p class="card-desc">Drag, drop, and construct real logic circuit panels. Tinker with physical logic gate toggles to generate automated outputs.</p>
-                        </div>
-                        <div class="card-meta">
-                            <span class="url-text">circuitverse.org</span>
-                            <a href="https://circuitverse.org/" target="_blank" class="go-btn">GO!</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-banner banner-hardware">⚪</div>
-                    <div class="card-body">
-                        <div>
-                            <div class="card-title">Turing Tumble Sim</div>
-                            <p class="card-desc">Solve abstract computer challenges without using any screens or chips—just use gravity, mechanical ramps, and tumbling marbles!</p>
-                        </div>
-                        <div class="card-meta">
-                            <span class="url-text">turingtumble.com</span>
-                            <a href="https://www.turingtumble.com/" target="_blank" class="go-btn">GO!</a>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
 
+        <!-- ZONE 3: AI & ETHICS -->
         <div class="category-section sec-ai">
             <h2 class="category-title">🤖 AI Mindsets & Digital Morality</h2>
             <div class="grid">
@@ -467,22 +331,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="card">
-                    <div class="card-banner banner-ai">⚔️</div>
-                    <div class="card-body">
-                        <div>
-                            <div class="card-title">Gladiabots AI</div>
-                            <p class="card-desc">Stop mash-button playing. Construct conditional logic trees and finite state paths to completely automate a tactical droid squad's fighting style.</p>
-                        </div>
-                        <div class="card-meta">
-                            <span class="url-text">gladiabots.com</span>
-                            <a href="https://www.gladiabots.com/" target="_blank" class="go-btn">GO!</a>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
 
+        <!-- ZONE 4: CYBER & MEDIA -->
         <div class="category-section sec-cyber">
             <h2 class="category-title">🛡️ Hacker Labs & Truth Detection</h2>
             <div class="grid">
@@ -496,19 +348,6 @@
                         <div class="card-meta">
                             <span class="url-text">kc7cyber.com</span>
                             <a href="https://kc7cyber.com/" target="_blank" class="go-btn">GO!</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-banner banner-cyber">📰</div>
-                    <div class="card-body">
-                        <div>
-                            <div class="card-title">Bad News</div>
-                            <p class="card-desc">Build your own media empire by writing clickbait and fake stories. Learn the tricks trolls use to rig social media platforms.</p>
-                        </div>
-                        <div class="card-meta">
-                            <span class="url-text">getbadnews.com</span>
-                            <a href="https://www.getbadnews.com/" target="_blank" class="go-btn">GO!</a>
                         </div>
                     </div>
                 </div>
@@ -561,64 +400,6 @@
                         <div class="card-meta">
                             <span class="url-text">mediasmarts.ca</span>
                             <a href="https://mediasmarts.ca/" target="_blank" class="go-btn">GO!</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="category-section sec-creative">
-            <h2 class="category-title">🎨 Generative Beats & Visual Art</h2>
-            <div class="grid">
-                <div class="card">
-                    <div class="card-banner banner-creative">🖼️</div>
-                    <div class="card-body">
-                        <div>
-                            <div class="card-title">p5.js Web Editor</div>
-                            <p class="card-desc">Code interactive, digital visual art frameworks. Feed cursor coordinate variables into math formulas to render fluid geometry patterns.</p>
-                        </div>
-                        <div class="card-meta">
-                            <span class="url-text">editor.p5js.org</span>
-                            <a href="https://editor.p5js.org/" target="_blank" class="go-btn">GO!</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-banner banner-creative">🎵</div>
-                    <div class="card-body">
-                        <div>
-                            <div class="card-title">Strudel Audio REPL</div>
-                            <p class="card-desc">Act like a live concert club DJ! Write loop structures and multi-layered arrays to generate custom electronic house and drum-and-bass beats.</p>
-                        </div>
-                        <div class="card-meta">
-                            <span class="url-text">strudel.cc</span>
-                            <a href="https://strudel.cc/" target="_blank" class="go-btn">GO!</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-banner banner-creative">🕹️</div>
-                    <div class="card-body">
-                        <div>
-                            <div class="card-title">microStudio Dev</div>
-                            <p class="card-desc">A complete retro game developer kit. Design pixel map tiles, animate custom sprite assets, and code full 2D arcade games.</p>
-                        </div>
-                        <div class="card-meta">
-                            <span class="url-text">microstudio.dev</span>
-                            <a href="https://microstudio.dev/" target="_blank" class="go-btn">GO!</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-banner banner-creative">👾</div>
-                    <div class="card-body">
-                        <div>
-                            <div class="card-title">Bitsy Engine</div>
-                            <p class="card-desc">A stripped-down 8-bit room workspace. Draw custom retro graphics, map pathways, and manage script variables to write mini explore games.</p>
-                        </div>
-                        <div class="card-meta">
-                            <span class="url-text">bitsy.org</span>
-                            <a href="https://ledoux.itch.io/bitsy" target="_blank" class="go-btn">GO!</a>
                         </div>
                     </div>
                 </div>
