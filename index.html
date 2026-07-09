@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Year 9/10 Interactive Computing & Ethics Lab</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-blue: #38bdf8;
+            --accent-green: #4ade80;
+            --accent-purple: #c084fc;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            border-bottom: 2px solid #334155;
+            padding-bottom: 1.5rem;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .category-title {
+            font-size: 1.8rem;
+            margin: 2.5rem 0 1.5rem 0;
+            padding-left: 0.5rem;
+            border-left: 4px solid var(--accent-blue);
+        }
+
+        .category-title.ethics { border-left-color: var(--accent-purple); }
+        .category-title.ui-media { border-left-color: var(--accent-green); }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #334155;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            border-color: #475569;
+        }
+
+        .card-image-container {
+            width: 100%;
+            height: 180px;
+            background-color: #0f172a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-bottom: 1px solid #334155;
+        }
+
+        .card-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.75rem;
+            color: #fff;
+        }
+
+        .card-description {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .card-btn {
+            display: inline-block;
+            text-align: center;
+            background-color: #334155;
+            color: #fff;
+            text-decoration: none;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: background-color 0.2s ease;
+        }
+
+        .card:hover .card-btn {
+            background-color: var(--accent-blue);
+            color: #0f172a;
+        }
+
+        .card:hover .ethics-btn {
+            background-color: var(--accent-purple);
+            color: #0f172a;
+        }
+
+        .card:hover .ui-btn {
+            background-color: var(--accent-green);
+            color: #0f172a;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 4rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Interactive Computing & Systems Lab</h1>
+            <p>Select a simulation framework below to investigate interactive systems, data manipulation, and logic rules.</p>
+        </header>
+
+        <h2 class="category-title">Systems, Logic & Algorithms</h2>
+        <div class="grid">
+            
+            <div class="card">
+                <div class="card-image-container">
+                    <img src="https://static.wixstatic.com/media/7e6b93_ee7894149f9c4665be3b2daa266cbf9d~mv2.png/v1/fill/w_941,h_263,al_c,q_85,enc_avif,quality_auto/7e6b93_ee7894149f9c4665be3b2daa266cbf9d~mv2.png" alt="The Evolution of Trust strategy simulation layout">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">The Evolution of Trust</h3>
+                    <p class="card-description">An interactive exploration of Game Theory. Students manipulate automated personalities to discover how mathematical trust networks thrive or break down.</p>
+                    <a href="https://ncase.me/trust/" target="_blank" class="card-btn">Launch Activity</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-image-container">
+                    <img src="https://play-lh.googleusercontent.com/AGXZwxnTvMfwqWw2TEt-o2dd-uOn9TeTxpjPRbCh2qon9ijvgbXv4nJeTUHDaTurtnU0lwPVI4gx37iF4pUmPJI" alt="Universal Paperclips minimalist black interface icon">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Universal Paperclips</h3>
+                    <p class="card-description">An incremental simulation demonstrating systemic scale. Players control an AI program tasked with converting all matter in the universe into basic office resources.</p>
+                    <a href="https://www.decisionproblem.com/paperclips/" target="_blank" class="card-btn">Launch Activity</a>
+                </div>
+            </div>
+
+        </div>
+
+        <h2 class="category-title ethics">Machine Learning & Digital Ethics</h2>
+        <div class="grid">
+
+            <div class="card">
+                <div class="card-image-container">
+                    <img src="https://www.survivalofthebestfit.com/game/assets/img/sotbf-manual.gif" alt="Survival of the Best Fit automated hiring dashboard tracking profiles">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Survival of the Best Fit</h3>
+                    <p class="card-description">A real-world simulation of machine learning bias. Students see firsthand how neutral automation inherits prejudices through flawed training data.</p>
+                    <a href="https://www.survivalofthebestfit.com/" target="_blank" class="card-btn ethics-btn">Launch Activity</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-image-container">
+                    <div style="background:#1e293b; color:var(--accent-purple); font-weight:bold; text-align:center; padding: 4rem 1rem;">MIT MORAL MACHINE DESIGN</div>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">The Moral Machine</h3>
+                    <p class="card-description">An autonomous vehicle ethical puzzle framework. Puts students in control of unavoidable algorithmic crash situations to evaluate hidden programming bias.</p>
+                    <a href="https://www.moralmachine.net/" target="_blank" class="card-btn ethics-btn">Launch Activity</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-image-container">
+                    <img src="https://miro.medium.com/v2/resize:fit:1400/1*6-Tajx0xpzfdLls5DmaGrA.png" alt="The Financial Times Uber Game isometric interface map layout">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">The Uber Game</h3>
+                    <p class="card-description">An algorithmic gig-economy simulator created by the Financial Times. Explores the impact of strict corporate optimization models on worker welfare.</p>
+                    <a href="https://ig.ft.com/uber-game/" target="_blank" class="card-btn ethics-btn">Launch Activity</a>
+                </div>
+            </div>
+
+        </div>
+
+        <h2 class="category-title ui-media">Media Literacy & Interface Design</h2>
+        <div class="grid">
+
+            <div class="card">
+                <div class="card-image-container">
+                    <img src="https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcSI2-bnXThv-tuVch8trw7_hESrZgnLmNIcZbdQsCyEPtZXjXfoZVeFaiSOjwWiNfvb7QwbLqUOXPGO7pg" alt="Frustrating game user interface button components layout styling">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">User Inyerface</h3>
+                    <p class="card-description">A frustrating puzzle game using intentionally awful UI/UX configurations. Explores deceptive patterns, accessibility principles, and interactive form rules.</p>
+                    <a href="https://userinyerface.com/" target="_blank" class="card-btn ui-btn">Launch Activity</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-image-container">
+                    <img src="https://blog.ncase.me/content/images/2016/11/ejD2NhI.png" alt="We Become What We Behold character graphics look into camera framing layout">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">We Become What We Behold</h3>
+                    <p class="card-description">A brief, impactful look at social media data cycles. Examines how feedback loops and attention architecture shift human behavior and group culture.</p>
+                    <a href="https://ncase.itch.io/wbwwb" target="_blank" class="card-btn ui-btn">Launch Activity</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-image-container">
+                    <img src="https://spotthetroll.org/images/metatags/index.jpg" alt="Spot the Troll Clemson University forensic web application cover graphic">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Spot the Troll</h3>
+                    <p class="card-description">An interactive media forensic quiz from Clemson University. Students review social profiles to identify markers distinguishing human users from systemic bots.</p>
+                    <a href="https://spotthetroll.org/start" target="_blank" class="card-btn ui-btn">Launch Activity</a>
+                </div>
+            </div>
+
+        </div>
+
+        <footer>
+            <p>Year 9 & 10 Advanced Interactive Computer Science Resources Lab Dashboard</p>
+        </footer>
+    </div>
+
+</body>
+</html>
