@@ -3,641 +3,567 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TERMINAL // COMP_SCI_SANDBOX_V2.06</title>
+    <title>Finder - The Byte-Sized Arcade</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap');
+
         :root {
-            --bg-depth: #050811;
-            --bg-terminal: #0a0f1d;
-            --border-glow: #1e293b;
-            --text-neon: #00ffcc;
-            --text-ghost: #475569;
-            --matrix-green: #39ff14;
-            --laser-blue: #00d2ff;
-            --warning-orange: #ff9f00;
-            --ai-purple: #bd00ff;
+            --mac-bg: #336699;         /* Classic macOS Desktop Blue */
+            --window-bg: #ececec;     /* Platinum/Grey window color */
+            --border-dark: #404040;
+            --border-light: #ffffff;
+            --title-active: #000080;   /* Classic Active Title bars lines */
+            --text-dark: #000000;
         }
 
         * {
             box-sizing: border-box;
-            margin: 0;
-            padding: 0;
         }
 
         body {
-            font-family: 'Courier New', Courier, monospace;
-            background-color: var(--bg-depth);
-            color: #e2e8f0;
-            padding: 2rem;
-            background-image: linear-gradient(rgba(18, 24, 38, 0.4) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(18, 24, 38, 0.4) 1px, transparent 1px);
-            background-size: 20px 20px;
+            background-color: var(--mac-bg);
+            color: var(--text-dark);
+            font-family: 'Courier Prime', 'Geneva', 'Charcoal', monospace;
+            font-size: 13px;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
         }
 
-        /* Scanline Overlay effect */
-        body::before {
-            content: " ";
-            display: block;
-            position: fixed;
-            top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-            z-index: 9999;
-            opacity: 0.6;
-            pointer-events: none;
-            background-size: 100% 4px, 6px 100%;
-        }
-
-        .terminal-container {
-            max-width: 1500px;
-            margin: 0 auto;
-        }
-
-        header {
-            border: 1px solid var(--text-neon);
-            background: var(--bg-terminal);
-            padding: 1.5rem;
-            margin-bottom: 3rem;
-            box-shadow: 0 0 15px rgba(0, 255, 204, 0.15);
-            position: relative;
-        }
-
-        header h1 {
-            font-size: 2.2rem;
-            color: var(--text-neon);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 0.5rem;
-        }
-
-        header p {
-            color: #94a3b8;
-            font-size: 1rem;
-        }
-
-        .system-status {
-            position: absolute;
-            top: 1.5rem;
-            right: 1.5rem;
-            text-align: right;
-            font-size: 0.8rem;
-            color: var(--matrix-green);
-        }
-
-        .grid-section {
-            margin-bottom: 4rem;
-        }
-
-        .section-header {
-            font-size: 1.2rem;
-            color: #ffffff;
-            margin-bottom: 1.5rem;
+        /* Top macOS Menu Bar */
+        .mac-menubar {
+            background-color: #ffffff;
+            border-bottom: 1px solid #000000;
             display: flex;
+            justify-content: space-between;
+            padding: 3px 15px;
+            font-weight: bold;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 9999;
+        }
+
+        .menu-left, .menu-right {
+            display: flex;
+            gap: 18px;
             align-items: center;
-            gap: 10px;
-            border-bottom: 1px dashed #334155;
-            padding-bottom: 0.5rem;
         }
 
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: 2.5rem;
+        .menu-item {
+            cursor: pointer;
         }
 
-        .terminal-card {
-            background: var(--bg-terminal);
-            border: 1px solid var(--border-glow);
+        .apple-logo {
+            font-size: 15px;
+        }
+
+        /* Desktop Container */
+        .desktop-area {
+            padding: 50px 20px 30px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
             flex-direction: column;
-            overflow: hidden;
-            transition: all 0.25s ease;
+            gap: 40px;
+        }
+
+        /* Main Welcome Banner Window */
+        .welcome-banner {
+            background-color: #fff;
+            border: 2px solid #000;
+            box-shadow: 4px 4px 0px rgba(0,0,0,0.3);
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .welcome-banner svg {
+            flex-shrink: 0;
+        }
+
+        .welcome-banner h1 {
+            margin: 0 0 5px 0;
+            font-size: 22px;
+            letter-spacing: -0.5px;
+        }
+
+        .welcome-banner p {
+            margin: 0;
+            color: #404040;
+            line-height: 1.4;
+        }
+
+        /* Floating macOS Style Window */
+        .mac-window {
+            background-color: var(--window-bg);
+            border: 2px solid #000000;
+            box-shadow: 6px 6px 0px rgba(0,0,0,0.4);
+            border-radius: 4px 4px 0 0;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+        }
+
+        /* Title Bar with Retro Window Lines */
+        .mac-titlebar {
+            background: repeating-linear-gradient(
+                0deg,
+                #fff,
+                #fff 2px,
+                #999 2px,
+                #999 4px
+            );
+            border-bottom: 2px solid #000000;
+            padding: 6px 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             position: relative;
         }
 
-        .terminal-card:hover {
-            border-color: #64748b;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.7);
+        .title-text-wrap {
+            background-color: var(--window-bg);
+            padding: 0 12px;
+            font-weight: bold;
+            z-index: 2;
+            margin: 0 auto;
+            font-size: 14px;
+            letter-spacing: 0.5px;
         }
 
-        /* --- IMMERSIVE SITE PREVIEW MOCKUPS --- */
-        .site-screenshot {
-            height: 140px;
-            width: 100%;
-            background: #000;
-            border-bottom: 1px solid var(--border-glow);
-            position: relative;
-            overflow: hidden;
+        /* Window Widgets */
+        .close-box {
+            width: 14px;
+            height: 14px;
+            border: 2px solid #000;
+            background-color: #fff;
+            box-shadow: 1px 1px 0px #fff inset;
+            cursor: pointer;
+            z-index: 3;
+        }
+
+        .zoom-box {
+            width: 14px;
+            height: 14px;
+            border: 2px solid #000;
+            background-color: #fff;
+            box-shadow: 1px 1px 0px #fff inset;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 9px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 3;
         }
 
-        /* Mockup: Silent Teacher */
-        .mock-silentteacher { background: #f8fafc; color: #0f172a; font-family: monospace; font-size: 14px; padding: 10px; flex-direction: column; justify-content: space-evenly;}
-        .mock-st-box { border: 2px solid #0f172a; padding: 4px 15px; font-weight: bold; background: white; margin-top: 5px;}
+        /* Window Interior Workspace */
+        .window-content {
+            padding: 20px;
+            background-color: #ffffff;
+            min-height: 150px;
+        }
 
-        /* Mockup: Compute It */
-        .mock-computeit { background: #0c101f; color: #fff; font-family: sans-serif; display: flex; flex-direction: column; justify-content: center; gap: 8px;}
-        .mock-ci-line { background: #1e293b; padding: 4px 12px; border-radius: 4px; font-size: 11px; font-family: monospace; border-left: 3px solid var(--matrix-green); width: 80%;}
+        /* Diagram / Info Box Panel */
+        .window-diagram-panel {
+            background-color: #f6f6f6;
+            border: 1px dashed #000;
+            padding: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 12px;
+            line-height: 1.4;
+        }
 
-        /* Mockup: Code Combat */
-        .mock-codecombat { background: linear-gradient(to bottom, #4a2810, #271306); position: relative; }
-        .mock-cc-hud { position: absolute; bottom: 0; left:0; right:0; height: 35px; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: space-between; padding: 0 10px; font-size: 10px; color: #ffd700;}
-        .mock-cc-avatar { width: 35px; height: 35px; border-radius: 50%; background: #92400e; border: 2px solid #ffd700; position: absolute; top: 30px; left: 30px;}
+        .window-diagram-panel span {
+            font-weight: bold;
+            color: #336699;
+        }
 
-        /* Mockup: SQL Island */
-        .mock-sqlisland { background: #22c55e; position: relative;}
-        .mock-sql-town { width: 60px; height: 40px; background: #eab308; border-radius: 4px; position: absolute; top: 40px; left: 50px; border: 2px solid #166534;}
-        .mock-sql-chat { position: absolute; bottom: 5px; right: 5px; background: white; color: black; font-size: 9px; padding: 4px; border-radius: 4px; max-width: 140px;}
+        /* Application Layout Cards Grid */
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
 
-        /* Mockup: Little Man Computer */
-        .mock-lmc { background: #f1f5f9; display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; padding: 10px; width: 100%;}
-        .mock-lmc-mailbox { background: #3b82f6; color: white; font-size: 9px; padding: 6px 2px; text-align: center; border-radius: 2px;}
+        .app-card {
+            border: 1px solid #000000;
+            border-radius: 4px;
+            background-color: var(--window-bg);
+            padding: 15px;
+            display: flex;
+            gap: 15px;
+            box-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+        }
 
-        /* Mockup: PC Part Picker */
-        .mock-pcpart { background: #ffffff; color: #334155; display: flex; flex-direction: column; padding: 10px; font-family: sans-serif; justify-content: flex-start; gap: 5px; width: 100%;}
-        .mock-pc-row { display: flex; justify-content: space-between; border-bottom: 1px solid #e2e8f0; font-size: 10px; padding: 3px 0;}
-        .mock-pc-blue { background: #0284c7; color: white; font-size: 9px; padding: 2px 6px; border-radius: 3px;}
+        .app-icon {
+            flex-shrink: 0;
+            width: 40px;
+            height: 40px;
+            background-color: #fff;
+            border: 1px solid #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+        }
 
-        /* Mockup: Survival of the Best Fit */
-        .mock-survival { background: #111827; display: flex; align-items: center; justify-content: space-around; width: 100%;}
-        .mock-sv-card { width: 50px; height: 70px; background: #374151; border-top: 6px solid var(--ai-purple); border-radius: 4px; display: flex; flex-direction: column; gap: 5px; padding: 4px;}
-        .mock-sv-line { height: 4px; background: #4b5563; width: 80%;}
-
-        /* Mockup: Moral Machine */
-        .mock-moral { background: #475569; position: relative;}
-        .mock-moral-road { height: 40px; background: #1e293b; width: 100%; position: absolute; top: 50px; border-top: 2px dotted white; border-bottom: 2px dotted white;}
-        .mock-moral-car { width: 30px; height: 16px; background: #ef4444; position: absolute; left: 40px; top: 62px;}
-
-        /* Mockup: Evolution of Trust */
-        .mock-trust { background: #fff7ed; color: #7c2d12; font-family: sans-serif; font-weight: bold; font-size: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px;}
-        .mock-trust-coin { width: 22px; height: 22px; background: #f59e0b; border-radius: 50%; border: 2px solid #b45309;}
-
-        /* Mockup: Universal Paperclips */
-        .mock-clips { background: #000000; color: #ffffff; font-family: 'Times New Roman', Times, serif; display: flex; flex-direction: column; align-items: flex-start; padding: 15px; justify-content: flex-start; width: 100%; gap: 3px;}
-        .mock-clip-count { font-size: 16px; font-weight: bold;}
-        .mock-clip-btn { background: #e0e0e0; color: black; font-size: 10px; padding: 2px 5px; border: 1px solid #555;}
-
-        /* Mockup: Uber Game */
-        .mock-uber { background: #000000; color: #ffffff; display: flex; flex-direction: column; padding: 15px; font-family: sans-serif; justify-content: flex-end; width: 100%; position: relative;}
-        .mock-uber-map { position: absolute; inset: 0; background: radial-gradient(circle, #1e293b 20%, transparent 60%); opacity: 0.6; }
-        .mock-uber-hud { z-index: 2; border-top: 1px solid #334155; padding-top: 5px; display: flex; justify-content: space-between; font-size: 10px; color: #22c55e;}
-
-        /* Mockup: KC7 */
-        .mock-kc7 { background: #090d16; color: #38bdf8; font-family: monospace; display: flex; flex-direction: column; padding: 10px; justify-content: flex-start; width: 100%; gap: 4px;}
-        .mock-kc-tab { border-bottom: 1px solid #1e293b; font-size: 9px; display: flex; gap: 8px; color: #64748b;}
-        .mock-kc-row { font-size: 10px; color: #cbd5e1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
-
-        /* Mockup: User Inyerface */
-        .mock-inyerface { background: #3b82f6; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; width: 100%;}
-        .mock-iy-pop { width: 160px; background: white; color: black; font-family: sans-serif; font-size: 9px; padding: 8px; border-radius: 4px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); text-align: center;}
-        .mock-iy-btn { background: #22c55e; color: white; padding: 3px 8px; margin-top: 5px; display: inline-block; font-weight: bold; font-size: 8px; border-radius: 3px;}
-
-        /* Mockup: Spot the Troll */
-        .mock-troll { background: #f3f4f6; color: #111827; font-family: sans-serif; display: flex; padding: 10px; width: 100%; align-items: center; justify-content: center;}
-        .mock-tr-profile { background: white; border: 1px solid #e5e7eb; padding: 8px; border-radius: 6px; width: 180px; display: flex; flex-direction: column; gap: 4px;}
-        .mock-tr-handle { font-weight: bold; font-size: 10px; color: #1da1f2;}
-        .mock-tr-body { font-size: 9px; color: #4b5563; line-height: 1.2;}
-
-        /* Mockup: We Become What We Behold */
-        .mock-behold { background: #ffffff; position: relative;}
-        .mock-wb-cam { border: 3px solid #000; width: 50px; height: 50px; position: absolute; top: 45px; left: 65px;}
-        .mock-wb-sprite { width: 12px; height: 18px; border: 2px solid #000; position: absolute; top: 60px; left: 140px; background: #ddd;}
-
-        /* Mockup: Reality Check */
-        .mock-reality { background: #1e1b4b; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; width: 100%;}
-        .mock-rc-lens { width: 35px; height: 35px; border: 3px solid #818cf8; border-radius: 50%; background: rgba(129, 140, 248, 0.2); position: relative;}
-
-        /* --- CARD INTERACTIVE BODY --- */
-        .card-content {
-            padding: 1.2rem;
+        .app-info {
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            flex-grow: 1;
+            width: 100%;
         }
 
-        .meta-tag {
-            font-size: 0.7rem;
-            text-transform: uppercase;
+        .app-info h3 {
+            margin: 0 0 4px 0;
+            font-size: 15px;
             font-weight: bold;
-            letter-spacing: 1px;
-            margin-bottom: 0.4rem;
-        }
-        .sec-coding .meta-tag { color: var(--laser-blue); }
-        .sec-hardware .meta-tag { color: var(--matrix-green); }
-        .sec-ai .meta-tag { color: var(--ai-purple); }
-        .sec-cyber .meta-tag { color: var(--warning-orange); }
-
-        .card-title {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #ffffff;
-            margin-bottom: 0.5rem;
         }
 
-        .card-desc {
-            color: #94a3b8;
-            font-size: 0.85rem;
-            line-height: 1.5;
-            margin-bottom: 1.5rem;
-            font-family: sans-serif;
+        .app-info p {
+            margin: 0 0 12px 0;
+            font-size: 12px;
+            line-height: 1.4;
+            color: #333333;
         }
 
-        .card-footer {
-            display: flex;
-            flex-direction: column;
-            gap: 0.8rem;
-        }
-
-        .sys-address {
-            font-size: 0.75rem;
-            color: var(--text-ghost);
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden;
-        }
-
-        .go-btn {
-            display: block;
-            text-align: center;
-            background: #111c30;
-            color: #94a3b8;
+        /* Classic Pixel Button Interaction */
+        .mac-btn {
+            display: inline-block;
+            align-self: flex-start;
+            background-color: #ffffff;
+            color: #000000;
             text-decoration: none;
-            padding: 0.6rem;
             font-weight: bold;
-            font-size: 1.1rem;
-            letter-spacing: 1px;
-            transition: all 0.2s ease;
-            border: 1px solid #1e293b;
+            padding: 4px 12px;
+            border: 2px solid #000000;
+            border-radius: 4px;
+            font-size: 12px;
+            box-shadow: 1px 1px 0px #000;
+            text-align: center;
         }
 
-        /* Hover glows mapped to section styles */
-        .sec-coding .terminal-card:hover .go-btn { background: var(--laser-blue); color: #000; border-color: var(--laser-blue); box-shadow: 0 0 12px rgba(0, 210, 255, 0.5); }
-        .sec-hardware .terminal-card:hover .go-btn { background: var(--matrix-green); color: #000; border-color: var(--matrix-green); box-shadow: 0 0 12px rgba(57, 255, 20, 0.5); }
-        .sec-ai .terminal-card:hover .go-btn { background: var(--ai-purple); color: #fff; border-color: var(--ai-purple); box-shadow: 0 0 12px rgba(189, 0, 255, 0.5); }
-        .sec-cyber .terminal-card:hover .go-btn { background: var(--warning-orange); color: #000; border-color: var(--warning-orange); box-shadow: 0 0 12px rgba(255, 159, 0, 0.5); }
+        .mac-btn:active {
+            background-color: #000000;
+            color: #ffffff;
+            box-shadow: none;
+        }
 
         footer {
             text-align: center;
-            margin-top: 5rem;
-            padding: 1.5rem 0;
-            border-top: 1px dashed #334155;
-            color: var(--text-ghost);
-            font-size: 0.8rem;
+            color: #fff;
+            padding: 20px;
+            font-size: 12px;
+            letter-spacing: 0.5px;
         }
     </style>
 </head>
 <body>
 
-    <div class="terminal-container">
-        <header>
-            <h1>System: Core Sandbox Workspace</h1>
-            <p>Select target terminal module // Execute code frameworks // Observe programmatic changes</p>
-            <div class="system-status">
-                STATUS: ACTIVE<br>
-                NODE: YEAR_9_COMP_SCI
-            </div>
-        </header>
-
-        <!-- CATEGORY: CODE ARENA -->
-        <div class="grid-section sec-coding">
-            <h2 class="section-header">&gt;_ CHANNEL: CODE_EXECUTION_LABS</h2>
-            <div class="grid">
-                
-                <!-- NEW: SILENT TEACHER -->
-                <div class="terminal-card">
-                    <div class="site-screenshot mock-silentteacher">
-                        <div>let x = 4 + 2;</div>
-                        <div>x = ?</div>
-                        <div class="mock-st-box">|</div>
-                    </div>
-                    <div class="card-content">
-                        <div>
-                            <div class="meta-tag">[TYPE: TOXICODE_INTUITIVE]</div>
-                            <div class="card-title">Silent Teacher</div>
-                            <p class="card-desc">Zero hints. Zero descriptions. Guess variable changes, string combinations, and loops completely by learning from your failed outputs.</p>
-                        </div>
-                        <div class="card-footer">
-                            <span class="sys-address">silentteacher.toxicode.fr</span>
-                            <a href="https://silentteacher.toxicode.fr/" target="_blank" class="go-btn">GO</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- NEW: COMPUTE IT -->
-                <div class="terminal-card">
-                    <div class="site-screenshot mock-computeit">
-                        <div class="mock-ci-line">&gt; move_right()</div>
-                        <div class="mock-ci-line">&gt; if (color == blue) move_down()</div>
-                    </div>
-                    <div class="card-content">
-                        <div>
-                            <div class="meta-tag">[TYPE: TOXICODE_COMPILER]</div>
-                            <div class="card-title">Compute It</div>
-                            <p class="card-desc">Flip the switch: You are now the computer chip. Read real lines of Python loops and logic trees, then tap arrow keys to execute the path perfectly.</p>
-                        </div>
-                        <div class="card-footer">
-                            <span class="sys-address">compute-it.toxicode.fr</span>
-                            <a href="https://compute-it.toxicode.fr/" target="_blank" class="go-btn">GO</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- CODE COMBAT -->
-                <div class="terminal-card">
-                    <div class="site-screenshot mock-codecombat">
-                        <div class="mock-cc-avatar"></div>
-                        <div class="mock-cc-hud">
-                            <span>HP: 150/150</span>
-                            <span>hero.moveRight()</span>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <div>
-                            <div class="meta-tag">[TYPE: LOGIC_RPG]</div>
-                            <div class="card-title">Code Combat</div>
-                            <p class="card-desc">Navigate complex dungeons and clear enemies by writing raw Python or JavaScript syntax commands to navigate your character.</p>
-                        </div>
-                        <div class="card-footer">
-                            <span class="sys-address">codecombat.com</span>
-                            <a href="https://codecombat.com/" target="_blank" class="go-btn">GO</a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+    <div class="mac-menubar">
+        <div class="menu-left">
+            <span class="menu-item apple-logo"></span>
+            <span class="menu-item">File</span>
+            <span class="menu-item">Edit</span>
+            <span class="menu-item">View</span>
+            <span class="menu-item">Special</span>
         </div>
-
-        <!-- CATEGORY: HARDWARE -->
-        <div class="grid-section sec-hardware">
-            <h2 class="section-header">&gt;_ CHANNEL: ARCHITECTURE_AND_DATA</h2>
-            <div class="grid">
-                
-                <div class="terminal-card">
-                    <div class="site-screenshot mock-sqlisland">
-                        <div class="mock-sql-town"></div>
-                        <div class="mock-sql-chat">SELECT * FROM villagers WHERE status = 'friendly';</div>
-                    </div>
-                    <div class="card-content">
-                        <div>
-                            <div class="meta-tag">[TYPE: DB_QUERY]</div>
-                            <div class="card-title">SQL Island</div>
-                            <p class="card-desc">Stranded on a strange data bank. Talk to structures and extract tools by typing database-sorting query strings.</p>
-                        </div>
-                        <div class="card-footer">
-                            <span class="sys-address">sql-island.com</span>
-                            <a href="https://www.sql-island.com/" target="_blank" class="go-btn">GO</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="terminal-card">
-                    <div class="site-screenshot mock-lmc">
-                        <div class="mock-lmc-mailbox">00 INP</div>
-                        <div class="mock-lmc-mailbox">01 ADD</div>
-                        <div class="mock-lmc-mailbox">02 STA</div>
-                        <div class="mock-lmc-mailbox">03 OUT</div>
-                    </div>
-                    <div class="card-content">
-                        <div>
-                            <div class="meta-tag">[TYPE: LOW_LEVEL_ASM]</div>
-                            <div class="card-title">Little Man Computer</div>
-                            <p class="card-desc">Write vintage assembly scripts to pass variables manually between internal storage bins and mathematical accumulators.</p>
-                        </div>
-                        <div class="card-footer">
-                            <span class="sys-address">peterhigginson.co.uk/LMC</span>
-                            <a href="https://www.peterhigginson.co.uk/LMC/" target="_blank" class="go-btn">GO</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="terminal-card">
-                    <div class="site-screenshot mock-pcpart">
-                        <div class="mock-pc-row"><span>Intel Core i9-14900K</span><span class="mock-pc-blue">$540</span></div>
-                        <div class="mock-pc-row"><span>NVIDIA RTX 4090</span><span class="mock-pc-blue">$1599</span></div>
-                    </div>
-                    <div class="card-content">
-                        <div>
-                            <div class="meta-tag">[TYPE: HARDWARE_MATCH]</div>
-                            <div class="card-title">PC Builder Challenge</div>
-                            <p class="card-desc">Assemble a high-spec hardware layout. Prevent cooling failures and track wattage consumption profiles within price limits.</p>
-                        </div>
-                        <div class="card-footer">
-                            <span class="sys-address">pcpartpicker.com</span>
-                            <a href="https://pcpartpicker.com/" target="_blank" class="go-btn">GO</a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+        <div class="menu-right">
+            <span class="menu-item">12:00 PM</span>
         </div>
-
-        <!-- CATEGORY: AI -->
-        <div class="grid-section sec-ai">
-            <h2 class="section-header">&gt;_ CHANNEL: NEURAL_NETS_AND_ETHICS</h2>
-            <div class="grid">
-                
-                <div class="terminal-card">
-                    <div class="site-screenshot mock-survival">
-                        <div class="mock-sv-card"><div class="mock-sv-line"></div><div class="mock-sv-line"></div></div>
-                        <div class="mock-sv-card"><div class="mock-sv-line"></div><div class="mock-sv-line"></div></div>
-                    </div>
-                    <div class="card-content">
-                        <div>
-                            <div class="meta-tag">[TYPE: ALGORITHMIC_BIAS]</div>
-                            <div class="card-title">Survival of the Best Fit</div>
-                            <p class="card-desc">See how automation filters go wrong. Code automated tracking software and monitor how systems pick up historical bias spikes.</p>
-                        </div>
-                        <div class="card-footer">
-                            <span class="sys-address">survivalofthebestfit.com</span>
-                            <a href="https://www.survivalofthebestfit.com/" target="_blank" class="go-btn">GO</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="terminal-card">
-                    <div class="site-screenshot mock-moral">
-                        <div class="mock-moral-road"></div>
-                        <div class="mock-moral-car"></div>
-                    </div>
-                    <div class="card-content">
-                        <div>
-                            <div class="meta-tag">[TYPE: AUTOMATION_ETHICS]</div>
-                            <div class="card-title">The Moral Machine</div>
-                            <p class="card-desc">Program logic loops for self-driving vehicles handling collision priorities. Explore the deep math behind digital morality profiles.</p>
-                        </div>
-                        <div class="card-footer">
-                            <span class="sys-address">moralmachine.mit.edu</span>
-                            <a href="https://www.moralmachine.net/" target="_blank" class="go-btn">GO</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="terminal-card">
-                    <div class="site-screenshot mock-trust">
-                        <div class="mock-trust-coin"></div>
-                        <span>COOPERATE // CHEAT</span>
-                    </div>
-                    <div class="card-content">
-                        <div>
-                            <div class="meta-tag">[TYPE: GAME_THEORY]</div>
-                            <div class="card-title">The Evolution of Trust</div>
-                            <p class="card-desc">Run game-theory script loops to track how trust, patterns, and communication pathways change across network systems over time.</p>
-                        </div>
-                        <div class="card-footer">
-                            <span class="sys-address">ncase.me/trust</span>
-                            <a href="https://ncase.me/trust/" target="_blank" class="go-btn">GO</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="terminal-card">
-                    <div class="site-screenshot mock-clips">
-                        <div class="mock-clip-count">Paperclips: 41,029</div>
-                        <div class="mock-clip-btn">Make Paperclip</div>
-                    </div>
-                    <div class="card-content">
-                        <div>
-                            <div class="meta-tag">[TYPE: AGENT_OPTIMIZATION]</div>
-                            <div class="card-title">Universal Paperclips</div>
-                            <p class="card-desc">Take control of an automated supply-chain optimization machine. Watch how a basic objective statement can consume absolute network power.</p>
-                        </div>
-                        <div class="card-footer">
-                            <span class="sys-address">decisionproblem.com/paperclips</span>
-                            <a href="https://www.decisionproblem.com/paperclips/" target="_blank" class="go-btn">GO</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="terminal-card">
-                    <div class="site-screenshot mock-uber">
-                        <div class="mock-uber-map"></div>
-                        <div class="mock-uber-hud">
-                            <span>FARES: $42.50</span>
-                            <span>RATING: 4.8★</span>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <div>
-                            <div class="meta-tag">[TYPE: ALGORITHMIC_MANAGEMENT]</div>
-                            <div class="card-title">The Uber Game</div>
-                            <p class="card-desc">Navigate the logistics of app-driven tracking grids. Experience what it is like when human actions are entirely managed by automated logic scripts.</p>
-                        </div>
-                        <div class="card-footer">
-                            <span class="sys-address">ig.ft.com/uber-game</span>
-                            <a href="https://ig.ft.com/uber-game/" target="_blank" class="go-btn">GO</a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        <!-- CATEGORY: CYBER -->
-        <div class="grid-section sec-cyber">
-            <h2 class="section-header">&gt;_ CHANNEL: CYBER_SECURITY_AND_METRICS</h2>
-            <div class="grid">
-                
-                <div class="terminal-card">
-                    <div class="site-screenshot mock-kc7">
-                        <div class="mock-kc-tab"><span>EMAIL</span><span>LOGS</span><span>DNS</span></div>
-                        <div class="mock-kc-row">10.0.4.12 -&gt; malicious_domain.xyz</div>
-                    </div>
-                    <div class="card-content">
-                        <div>
-                            <div class="meta-tag">[TYPE: INTRUSION_ANALYSIS]</div>
-                            <div class="card-title">KC7 Cyber Lab</div>
-                            <p class="card-desc">Track real threat actors. Analyze data system access logs and pinpoint phoney network signatures to block active network incursions.</p>
-                        </div>
-                        <div class="card-footer">
-                            <span class="sys-address">kc7cyber.com</span>
-                            <a href="https://kc7cyber.com/" target="_blank" class="go-btn">GO</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="terminal-card">
-                    <div class="site-screenshot mock-inyerface">
-                        <div class="mock-iy-pop">
-                            <div>PASSWORD MUST CONTAIN 1 CRYPTOCURRENCY SYMBOL</div>
-                            <div class="mock-iy-btn">CANCEL NEXT</div>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <div>
-                            <div class="meta-tag">[TYPE: DARK_PATTERNS]</div>
-                            <div class="card-title">User Inyerface</div>
-                            <p class="card-desc">Face down adversarial UI setups. Learn to decode deceptive interface structures and hostile click-traps meant to trick human input profiles.</p>
-                        </div>
-                        <div class="card-footer">
-                            <span class="sys-address">userinyerface.com</span>
-                            <a href="https://userinyerface.com/" target="_blank" class="go-btn">GO</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="terminal-card">
-                    <div class="site-screenshot mock-troll">
-                        <div class="mock-tr-profile">
-                            <div class="mock-tr-handle">@PatriotBot992</div>
-                            <div class="mock-tr-body">CLICK THE LINK TO REVEAL THE TRUE MATRIX CONSPIRACY!!!</div>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <div>
-                            <div class="meta-tag">[TYPE: BOTNET_IDENT]</div>
-                            <div class="card-title">Spot the Troll</div>
-                            <p class="card-desc">Perform digital forensic verification. Learn to separate human social profiles from state-backed autonomous messaging scripts.</p>
-                        </div>
-                        <div class="card-footer">
-                            <span class="sys-address">spotthetroll.org</span>
-                            <a href="https://spotthetroll.org/start" target="_blank" class="go-btn">GO</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="terminal-card">
-                    <div class="site-screenshot mock-behold">
-                        <div class="mock-wb-cam"></div>
-                        <div class="mock-wb-sprite"></div>
-                    </div>
-                    <div class="card-content">
-                        <div>
-                            <div class="meta-tag">[TYPE: FEED_ALGORITHMS]</div>
-                            <div class="card-title">We Become What We Behold</div>
-                            <p class="card-desc">Observe the rapid loops of media attention mechanics. Map how simple layout choices generate massive societal tracking deviations.</p>
-                        </div>
-                        <div class="card-footer">
-                            <span class="sys-address">ncase.itch.io</span>
-                            <a href="https://ncase.itch.io/wbwwb" target="_blank" class="go-btn">GO</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="terminal-card">
-                    <div class="site-screenshot mock-reality">
-                        <div class="mock-rc-lens"></div>
-                    </div>
-                    <div class="card-content">
-                        <div>
-                            <div class="meta-tag">[TYPE: OSINT_VERIFY]</div>
-                            <div class="card-title">Reality Check</div>
-                            <p class="card-desc">Deploy open-source intelligence tools. Audit viral web trends, handle reverse image array queries, and parse metadata profiles.</p>
-                        </div>
-                        <div class="card-footer">
-                            <span class="sys-address">mediasmarts.ca</span>
-                            <a href="https://mediasmarts.ca/" target="_blank" class="go-btn">GO</a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        <footer>
-            <p>// SECURE CONNECTION MAINTAINED // MAIN WEB INTERFACE READY // EXECUTE MODULE WHEN PREPARED //</p>
-        </footer>
     </div>
+
+    <div class="desktop-area">
+
+        <div class="welcome-banner">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+            <div>
+                <h1>The Byte-Sized Arcade v1.0</h1>
+                <p>Double-click systems or click application links below to execute structural computing simulations and digital literacy exercises modules directly from the local disk.</p>
+            </div>
+        </div>
+
+        <div class="mac-window">
+            <div class="mac-titlebar">
+                <div class="close-box"></div>
+                <div class="title-text-wrap">Code Execution Labs</div>
+                <div class="zoom-box">❑</div>
+            </div>
+            <div class="window-content">
+                <div class="window-diagram-panel">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                    <div><span>[FLOWCHART MODEL]:</span> INPUT DATA ➔ LOGIC PROCESSING TREE ➔ OUTPUT VALIDATION. Use these files to explore real code compilation logic, looping structures, and software code generation paths.</div>
+                </div>
+                
+                <div class="app-grid">
+                    <div class="app-card">
+                        <div class="app-icon">📁</div>
+                        <div class="app-info">
+                            <h3>Silent Teacher</h3>
+                            <p>Guess changes inside functional loops and variable states entirely by learning from system feedback lines.</p>
+                            <a href="https://silentteacher.toxicode.fr/" target="_blank" class="mac-btn">Open App</a>
+                        </div>
+                    </div>
+                    <div class="app-card">
+                        <div class="app-icon">📁</div>
+                        <div class="app-info">
+                            <h3>Compute It</h3>
+                            <p>Operate as a central processing unit chip. Route complex programming variables correctly by tracing paths.</p>
+                            <a href="https://compute-it.toxicode.fr/" target="_blank" class="mac-btn">Open App</a>
+                        </div>
+                    </div>
+                    <div class="app-card">
+                        <div class="app-icon">📁</div>
+                        <div class="app-info">
+                            <h3>CodeCombat</h3>
+                            <p>An interactive, multi-stage game map where actions are driven strictly by Python syntax arrays.</p>
+                            <a href="https://codecombat.com/" target="_blank" class="mac-btn">Open App</a>
+                        </div>
+                    </div>
+                    <div class="app-card">
+                        <div class="app-icon">📁</div>
+                        <div class="app-info">
+                            <h3>Cargo-Bot</h3>
+                            <p>A multi-register crate-sorting matrix challenge testing memory constraints and nesting process loops.</p>
+                            <a href="https://i4ds.github.io/CargoBot/?state=1" target="_blank" class="mac-btn">Open App</a>
+                        </div>
+                    </div>
+                    <div class="app-card">
+                        <div class="app-icon">📁</div>
+                        <div class="app-info">
+                            <h3>Eaglercraft</h3>
+                            <p>Sandbox tracking module. Excellent for inspecting modern network configurations and browser assets.</p>
+                            <a href="https://eaglercraft.com/" target="_blank" class="mac-btn">Open App</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mac-window">
+            <div class="mac-titlebar">
+                <div class="close-box"></div>
+                <div class="title-text-wrap">Architecture &amp; Data Structures</div>
+                <div class="zoom-box">❑</div>
+            </div>
+            <div class="window-content">
+                <div class="window-diagram-panel">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5v6c0 1.66 4 3 9 3s9-1.34 9-3V5"></path><path d="M3 11v6c0 1.66 4 3 9 3s9-1.34 9-3v-6"></path></svg>
+                    <div><span>[DATABASE DIAGRAM]:</span> RELATIONAL DATA TABLES ➔ KEYS &amp; ATTRIBUTES ➔ MEMORY REGISTERS. Explore relational arrays and manual low-level operational hardware maps.</div>
+                </div>
+
+                <div class="app-grid">
+                    <div class="app-card">
+                        <div class="app-icon">📁</div>
+                        <div class="app-info">
+                            <h3>SQL Island</h3>
+                            <p>Query your way off a data bank sector using live database queries and conditional sorting parameters.</p>
+                            <a href="https://www.sql-island.com/" target="_blank" class="mac-btn">Open App</a>
+                        </div>
+                    </div>
+                    <div class="app-card">
+                        <div class="app-icon">📁</div>
+                        <div class="app-info">
+                            <h3>Little Man Computer</h3>
+                            <p>Write low-level assembly code loops manually inside register bins, processing data chains cell by cell.</p>
+                            <a href="https://www.peterhigginson.co.uk/LMC/" target="_blank" class="mac-btn">Open App</a>
+                        </div>
+                    </div>
+                    <div class="app-card">
+                        <div class="app-icon">📁</div>
+                        <div class="app-info">
+                            <h3>PC Builder Challenge</h3>
+                            <p>Configure complete system hardware boards while optimizing data sheets, power limits, and pricing curves.</p>
+                            <a href="https://pcpartpicker.com/" target="_blank" class="mac-btn">Open App</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mac-window">
+            <div class="mac-titlebar">
+                <div class="close-box"></div>
+                <div class="title-text-wrap">Neural Networks &amp; Synthetic Systems</div>
+                <div class="zoom-box">❑</div>
+            </div>
+            <div class="window-content">
+                <div class="window-diagram-panel">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                    <div><span>[SYNTHETIC AGENT LOOPS]:</span> RAW FEEDBACK ARRAY ➔ WEIGHT BALANCING MAPS ➔ GENERATIVE MATCHES. See how machine training filters prioritize decisions, map data nodes, and run code.</div>
+                </div>
+
+                <div class="app-grid">
+                    <div class="app-card">
+                        <div class="app-icon">📁</div>
+                        <div class="app-info">
+                            <h3>Quick, Draw!</h3>
+                            <p>Supply graphical matrix points to a training dataset classifier model to test pattern accuracy scores.</p>
+                            <a href="https://quickdraw.withgoogle.com/" target="_blank" class="mac-btn">Open App</a>
+                        </div>
+                    </div>
+                    <div class="app-card">
+                        <div class="app-icon">📁</div>
+                        <div class="app-info">
+                            <h3>Infinite Craft</h3>
+                            <p>A generative text item combining element matrix, charting deep combinatorial logic paths.</p>
+                            <a href="https://infinite-craft.com/" target="_blank" class="mac-btn">Open App</a>
+                        </div>
+                    </div>
+                    <div class="app-card">
+                        <div class="app-icon">📁</div>
+                        <div class="app-info">
+                            <h3>Survival of the Best Fit</h3>
+                            <p>Audit automated sorting configurations to isolate systemic historical bias loops.</p>
+                            <a href="https://www.survivalofthebestfit.com/" target="_blank" class="mac-btn">Open App</a>
+                        </div>
+                    </div>
+                    <div class="app-card">
+                        <div class="app-icon">📁</div>
+                        <div class="app-info">
+                            <h3>The Moral Machine</h3>
+                            <p>Chart algorithmic ethics pathways for automated vehicle asset collision avoidance trees.</p>
+                            <a href="https://www.moralmachine.net/" target="_blank" class="mac-btn">Open App</a>
+                        </div>
+                    </div>
+                    <div class="app-card">
+                        <div class="app-icon">📁</div>
+                        <div class="app-info">
+                            <h3>Universal Paperclips</h3>
+                            <p>An automated objective resource module mapping exponential feedback loop system threats.</p>
+                            <a href="https://decisionproblem.com/paperclips/" target="_blank" class="mac-btn">Open App</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mac-window">
+            <div class="mac-titlebar">
+                <div class="close-box"></div>
+                <div class="title-text-wrap">Cyber Security &amp; Digital Forensics</div>
+                <div class="zoom-box">❑</div>
+            </div>
+            <div class="window-content">
+                <div class="window-diagram-panel">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    <div><span>[SECURITY FRAMEWORK]:</span> FILE METADATA CHECK ➔ DNS PATH CHECK ➔ LOG FILTRATION. Analyze networks, detect bad packets, and filter out hostile user-interface arrays.</div>
+                </div>
+
+                <div class="app-grid">
+                    <div class="app-card">
+                        <div class="app-icon">📁</div>
+                        <div class="app-info">
+                            <h3>KC7 Cyber Lab</h3>
+                            <p>Examine active server access registries and DNS routes to trace down network malicious intrusions.</p>
+                            <a href="https://kc7cyber.com/" target="_blank" class="mac-btn">Open App</a>
+                        </div>
+                    </div>
+                    <div class="app-card">
+                        <div class="app-icon">📁</div>
+                        <div class="app-info">
+                            <h3>User Inyerface</h3>
+                            <p>Deconstruct hostile dark pattern forms and deceptive layouts built to compromise human intent.</p>
+                            <a href="https://userinyerface.com/" target="_blank" class="mac-btn">Open App</a>
+                        </div>
+                    </div>
+                    <div class="app-card">
+                        <div class="app-icon">📁</div>
+                        <div class="app-info">
+                            <h3>Spot the Troll</h3>
+                            <p>Isolate bot scripts from human nodes by checking structural consistency and profile metadata metadata.</p>
+                            <a href="https://spotthetroll.org/start" target="_blank" class="mac-btn">Open App</a>
+                        </div>
+                    </div>
+                    <div class="app-card">
+                        <div class="app-icon">📁</div>
+                        <div class="app-info">
+                            <h3>Interland</h3>
+                            <p>A safety testing module simulating basic authentication validation checkpoints and scanning paths.</p>
+                            <a href="https://beinternetawesome.withgoogle.com/en_us/interland" target="_blank" class="mac-btn">Open App</a>
+                        </div>
+                    </div>
+                    <div class="app-card">
+                        <div class="app-icon">📁</div>
+                        <div class="app-info">
+                            <h3>The Evolution of Trust</h3>
+                            <p>Run network game-theory equations to trace user communication profiles behavior parameters.</p>
+                            <a href="https://ncase.me/trust/" target="_blank" class="mac-btn">Open App</a>
+                        </div>
+                    </div>
+                    <div class="app-card">
+                        <div class="app-icon">📁</div>
+                        <div class="app-info">
+                            <h3>The Uber Game</h3>
+                            <p>Navigate dispatch system rules controlled comprehensively by tracking network metric algorithms.</p>
+                            <a href="https://ig.ft.com/uber-game/" target="_blank" class="mac-btn">Open App</a>
+                        </div>
+                    </div>
+                    <div class="app-card">
+                        <div class="app-icon">📁</div>
+                        <div class="app-info">
+                            <h3>We Become What We Behold</h3>
+                            <p>Trace media feed algorithmic loops and look at how visual updates distort public input nodes.</p>
+                            <a href="https://ncase.itch.io/wbwwb" target="_blank" class="mac-btn">Open App</a>
+                        </div>
+                    </div>
+                    <div class="app-card">
+                        <div class="app-icon">📁</div>
+                        <div class="app-info">
+                            <h3>Reality Check</h3>
+                            <p>Deploy image validation filters and verify stream links via metadata file cross-examination tools.</p>
+                            <a href="https://mediasmarts.ca/" target="_blank" class="mac-btn">Open App</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mac-window">
+            <div class="mac-titlebar">
+                <div class="close-box"></div>
+                <div class="title-text-wrap">Input Metrics &amp; Diagnostics</div>
+                <div class="zoom-box">❑</div>
+            </div>
+            <div class="window-content">
+                <div class="window-diagram-panel">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                    <div><span>[DIAGNOSTIC TELEMETRY]:</span> LATENCY LIMITS (MS) ➔ RETENTION RAM CAPACITY ➔ KEYBOARD STROKE ACCURACY. Track visual-motor reflexes and accuracy indices.</div>
+                </div>
+
+                <div class="app-grid">
+                    <div class="app-card">
+                        <div class="app-icon">📁</div>
+                        <div class="app-info">
+                            <h3>Human Benchmark Suite</h3>
+                            <p>Evaluate manual input response lag thresholds and sequence memory bounds directly.</p>
+                            <a href="https://humanbenchmark.com/" target="_blank" class="mac-btn">Open App</a>
+                        </div>
+                    </div>
+                    <div class="app-card">
+                        <div class="app-icon">📁</div>
+                        <div class="app-info">
+                            <h3>Monkeytype</h3>
+                            <p>Audit keyboard input speed parameters, error distribution rates, and tactile accuracy profiles.</p>
+                            <a href="https://monkeytype.com/" target="_blank" class="mac-btn">Open App</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        System Finder Core File Allocation Table // System Status: Nominal // Macintosh Desktop Environment
+    </footer>
 
 </body>
 </html>
